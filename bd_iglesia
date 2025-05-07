@@ -1,0 +1,179 @@
+-- Tabla de ministerios
+CREATE TABLE ministerio (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL UNIQUE,
+    descripcion VARCHAR(200),
+    fecha_creacion DATE DEFAULT CURRENT_DATE
+);
+
+-- Tabla de cargos
+CREATE TABLE cargo (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL UNIQUE,
+    descripcion TEXT
+);
+
+-- Tabla de miembros (con cargo_id como FK obligatoria)
+CREATE TABLE miembro (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    fecha_nacimiento DATE,
+    telefono VARCHAR(20),
+    cargo_id INTEGER NOT NULL,
+    fecha_ingreso DATE DEFAULT CURRENT_DATE,
+    FOREIGN KEY (cargo_id) REFERENCES cargo(id) ON DELETE RESTRICT
+);
+
+-- Relación miembro-ministerio (muchos a muchos con info adicional)
+CREATE TABLE asignacion_ministerio (
+    miembro_id INTEGER NOT NULL,
+    ministerio_id INTEGER NOT NULL,
+    fecha_inicio DATE DEFAULT CURRENT_DATE,
+    fecha_final DATE,
+    estado BOOLEAN DEFAULT TRUE,
+    PRIMARY KEY (miembro_id, ministerio_id),
+    FOREIGN KEY (miembro_id) REFERENCES miembro(id) ON DELETE CASCADE,
+    FOREIGN KEY (ministerio_id) REFERENCES ministerio(id) ON DELETE RESTRICT
+);
+
+-- Tabla de categorías de eventos
+CREATE TABLE categoria_evento (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(30) NOT NULL UNIQUE,
+    descripcion VARCHAR(200)
+);
+
+-- Tabla de eventos
+CREATE TABLE evento (
+    id SERIAL PRIMARY KEY,
+    categoria_id INTEGER NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    fecha_inicio DATE NOT NULL,
+    fecha_final DATE,
+    lugar VARCHAR(100),
+    FOREIGN KEY (categoria_id) REFERENCES categoria_evento(id) ON DELETE RESTRICT
+);
+
+-- Tabla de relación miembro - evento - cargo
+CREATE TABLE asistencia_evento (
+    evento_id INTEGER NOT NULL,
+    miembro_id INTEGER NOT NULL,
+    cargo_id INTEGER NOT NULL,
+    PRIMARY KEY (evento_id, miembro_id),
+    FOREIGN KEY (evento_id) REFERENCES evento(id) ON DELETE CASCADE,
+    FOREIGN KEY (miembro_id) REFERENCES miembro(id) ON DELETE CASCADE,
+    FOREIGN KEY (cargo_id) REFERENCES cargo(id) ON DELETE RESTRICT
+);
+
+-- Tabla de contribuciones (Diezmo, Ofrenda, Donación)
+CREATE TABLE contribucion (
+    id SERIAL PRIMARY KEY,
+    evento_id INTEGER,
+    miembro_id INTEGER NOT NULL,
+    tipo VARCHAR(20) NOT NULL CHECK (tipo IN ('Diezmo', 'Ofrenda', 'Donacion')),
+    monto NUMERIC(10,2) NOT NULL CHECK (monto > 0),
+    fecha_registro DATE DEFAULT CURRENT_DATE,
+    FOREIGN KEY (evento_id) REFERENCES evento(id) ON DELETE SET NULL,
+    FOREIGN KEY (miembro_id) REFERENCES miembro(id) ON DELETE CASCADE
+);
+
+--POBLADA DE TABLAS
+-- Insertar ministerios
+INSERT INTO ministerio (nombre, descripcion) VALUES
+('Alabanza', 'Ministerio encargado de la música y adoración'),
+('Oración', 'Ministerio de intercesión y clamor'),
+('Bienvenida', 'Encargados de recibir a los miembros y visitantes');
+
+-- Insertar cargos
+INSERT INTO cargo (nombre, descripcion) VALUES
+('Pastor', 'Responsable de la enseñanza y liderazgo espiritual'),
+('Líder', 'Encargado de coordinar un grupo o ministerio'),
+('Miembro', 'Participante activo de la congregación');
+
+-- Insertar miembros
+INSERT INTO miembro (nombre, apellido, fecha_nacimiento, telefono, cargo_id) VALUES
+('Juan', 'Pérez', '1990-05-12', '76543210', 1),
+('Ana', 'Torres', '1988-11-23', '76451234', 2),
+('Carlos', 'Gómez', '1995-04-03', '72123456', 3);
+
+-- Insertar asignaciones a ministerios
+INSERT INTO asignacion_ministerio (miembro_id, ministerio_id, fecha_inicio) VALUES
+(1, 1, '2023-01-10'),
+(2, 2, '2023-03-15'),
+(3, 3, '2023-05-20');
+
+-- Insertar categorías de eventos
+INSERT INTO categoria_evento (nombre, descripcion) VALUES
+('Culto Dominical', 'Reunión principal de adoración los domingos'),
+('Reunión de Oración', 'Encuentro semanal para orar'),
+('Ayuno y Vigilia', 'Jornada de ayuno y oración extendida');
+
+-- Insertar eventos
+INSERT INTO evento (categoria_id, nombre, fecha_inicio, fecha_final, lugar) VALUES
+(1, 'Culto 1er Domingo Abril', '2024-04-07', '2024-04-07', 'Templo Central'),
+(2, 'Oración por la ciudad', '2024-04-10', '2024-04-10', 'Templo Sur'),
+(3, 'Vigilia de Jóvenes', '2024-04-15', '2024-04-15', 'Templo Norte');
+
+-- Insertar asistencia a eventos
+INSERT INTO asistencia_evento (evento_id, miembro_id, cargo_id) VALUES
+(1, 1, 1),
+(2, 2, 2),
+(3, 3, 3);
+
+-- Insertar contribuciones
+INSERT INTO contribucion (evento_id, miembro_id, tipo, monto) VALUES
+(1, 1, 'Diezmo', 100.00),
+(2, 2, 'Ofrenda', 50.00),
+(3, 3, 'Donacion', 25.00);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

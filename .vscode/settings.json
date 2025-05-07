@@ -1,0 +1,4 @@
+{
+    "phpcs.enable": false,
+    "php.validate.enable": true
+}
