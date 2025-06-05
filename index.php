@@ -95,6 +95,25 @@ if ($controller) {
                     </div>
                 </div>
             </div>
+            <!-- Patrones de Diseño -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Módulo Patrones de Diseño</h5>
+                        <div class="list-group mt-2">
+                            <a href="index.php?controller=contribucion&action=listarContribucion" class="list-group-item list-group-item-action">
+                                <i class="bi bi-cash-coin"></i> Proxy
+                            </a>
+                            <a href="index.php?controller=contribucion&action=listarContribucion" class="list-group-item list-group-item-action">
+                                <i class="bi bi-cash-coin"></i> Singleton
+                            </a>
+                            <a href="index.php?controller=contribucion&action=listarContribucion" class="list-group-item list-group-item-action">
+                                <i class="bi bi-cash-coin"></i> Factory Method
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
         </div>
