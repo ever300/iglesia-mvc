@@ -3,8 +3,9 @@ require_once __DIR__ . '/../modelo/MContribucion.php';
 require_once __DIR__ . '/../modelo/MEvento.php';
 require_once __DIR__ . '/../modelo/MMiembro.php';
 require_once __DIR__ . '/../vista/contribuciones/VContribucion.php';
+require_once __DIR__ . '/IController.php';
 
-class CContribucion {
+class CContribucion implements IController {
     private $vista;
 
     private $modelo;

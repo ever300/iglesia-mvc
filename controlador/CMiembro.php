@@ -2,8 +2,9 @@
 require_once __DIR__ . '/../modelo/MMiembro.php';
 require_once __DIR__ . '/../modelo/MCargo.php';
 require_once __DIR__ . '/../vista/congregacion/VMiembro.php';
+require_once __DIR__ . '/IController.php';
 
-class CMiembro {
+class CMiembro implements IController {
     private $modelo;
     private $cargoModel;
     private $vista;

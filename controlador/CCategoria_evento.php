@@ -1,8 +1,9 @@
 <?php
 require_once __DIR__ . '/../modelo/MCategoria_evento.php';
 require_once __DIR__ . '/../vista/eventos/VCategoria_evento.php';
+require_once __DIR__ . '/IController.php';
 
-class CCategoria_evento {
+class CCategoria_evento implements IController {
     private $modelo;
     private $vista;
 

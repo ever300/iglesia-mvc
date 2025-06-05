@@ -1,8 +1,9 @@
 <?php
 require_once __DIR__ . '/../modelo/MCargo.php';
 require_once __DIR__ . '/../vista/congregacion/VCargo.php';
+require_once __DIR__ . '/IController.php';
 
-class CCargo {
+class CCargo implements IController {
     private $modelo;
     private $vista;
 
