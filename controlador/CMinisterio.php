@@ -1,8 +1,9 @@
 <?php
 require_once __DIR__ . '/../modelo/MMinisterio.php';
 require_once __DIR__ . '/../vista/congregacion/VMinisterio.php';
+require_once __DIR__ . '/IController.php';
 
-class CMinisterio {
+class CMinisterio implements IController {
     private $modelo;
     private $vista;
 

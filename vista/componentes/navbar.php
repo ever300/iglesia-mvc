@@ -34,7 +34,11 @@
                 </li>
             </ul>
             <div class="navbar-text">
-                <a href="#" class="text-white">Cerrar Sesión</a>
+                <?php if (isset($_SESSION['usuario'])): ?>
+                    <a href="index.php?controller=auth&action=logout" class="text-white">Cerrar Sesión</a>
+                <?php else: ?>
+                    <a href="index.php?controller=auth&action=login" class="text-white">Iniciar Sesión</a>
+                <?php endif; ?>
             </div>
         </div>
     </div>

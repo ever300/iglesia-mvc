@@ -3,8 +3,9 @@ require_once __DIR__ . '/../modelo/MAsignacion_Ministerio.php';
 require_once __DIR__ . '/../modelo/MMiembro.php';
 require_once __DIR__ . '/../modelo/MMinisterio.php';
 require_once __DIR__ . '/../vista/congregacion/VAsignacion_Ministerio.php';
+require_once __DIR__ . '/IController.php';
 
-class CAsignacion_Ministerio
+class CAsignacion_Ministerio implements IController
 {
     private $modelo;
     private $miembroModel;
