@@ -5,8 +5,9 @@ require_once __DIR__ . '/../modelo/MMiembro.php';
 require_once __DIR__ . '/../modelo/MCargo.php';
 require_once __DIR__ . '/../modelo/MAsistencia_Evento.php';
 require_once __DIR__ . '/../vista/eventos/VEvento.php';
+require_once __DIR__ . '/IController.php';
 
-class CEvento {
+class CEvento implements IController {
     private $vista;
 
     private $modelo;

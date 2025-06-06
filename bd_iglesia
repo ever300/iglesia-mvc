@@ -78,6 +78,14 @@ CREATE TABLE contribucion (
     FOREIGN KEY (miembro_id) REFERENCES miembro(id) ON DELETE CASCADE
 );
 
+-- Tabla de usuarios para autenticación
+CREATE TABLE usuario (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    rol VARCHAR(20) NOT NULL
+);
+
 --POBLADA DE TABLAS
 -- Insertar ministerios
 INSERT INTO ministerio (nombre, descripcion) VALUES
@@ -127,6 +135,9 @@ INSERT INTO contribucion (evento_id, miembro_id, tipo, monto) VALUES
 (2, 2, 'Ofrenda', 50.00),
 (3, 3, 'Donacion', 25.00);
 
+-- Usuario administrador por defecto (password: admin123)
+INSERT INTO usuario (username, password, rol) VALUES
+('admin', 'admin', 'admin');
 
 
 
