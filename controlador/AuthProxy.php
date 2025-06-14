@@ -9,6 +9,10 @@ class AuthProxy implements IController {
     }
 
     public function handleRequest() {
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+
         if (isset($_SESSION['usuario'])) {
             $this->controller->handleRequest();
         } else {
