@@ -2,27 +2,12 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require_once 'config/conexion.php';
+require_once 'cliente/Client.php';
 session_start();
 
-$controller = $_GET['controller'] ?? null;
-
-if ($controller) {
-    $controllerClass = 'C' . ucfirst($controller);
-    $controllerFile = "controlador/{$controllerClass}.php";
-
-    if (file_exists($controllerFile)) {
-        require_once $controllerFile;
-        $controllerInstance = new $controllerClass();
-        if ($controller !== 'auth') {
-            require_once 'controlador/AuthProxy.php';
-            $controllerInstance = new AuthProxy($controllerInstance);
-        }
-        $controllerInstance->handleRequest();
-        exit; // Detiene aquí para evitar que cargue el HTML debajo
-    } else {
-        die("❌ Controlador no encontrado: $controllerClass");
-    }
+$client = new Client();
+if ($client->handle()) {
+    exit; // Detiene aquí para evitar que cargue el HTML debajo
 }
 ?>
 
