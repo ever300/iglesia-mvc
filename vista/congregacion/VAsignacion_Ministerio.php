@@ -2,12 +2,17 @@
 require_once __DIR__ . '/../VistaBase.php';
 
 class VAsignacion_Ministerio extends VistaBase {
-    public function render($asignaciones, $miembros, $ministerios, $asignacionEditar = null) {
+    public function render(...$params) {
+        $asignacionEditar = $params[3] ?? null;
         $this->pageTitle = isset($asignacionEditar) ? 'Editar Asignación Ministerio' : 'Registrar Asignación Ministerio';
-        parent::render($asignaciones, $miembros, $ministerios, $asignacionEditar);
+        parent::render(...$params);
     }
 
-    protected function contenido($asignaciones, $miembros, $ministerios, $asignacionEditar = null) {
+    protected function contenido(...$params) {
+        $asignaciones = $params[0] ?? [];
+        $miembros = $params[1] ?? [];
+        $ministerios = $params[2] ?? [];
+        $asignacionEditar = $params[3] ?? null;
         $isEditing = isset($asignacionEditar);
         ?>
         <div class="container mt-4">

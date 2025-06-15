@@ -2,12 +2,15 @@
 require_once __DIR__ . '/../VistaBase.php';
 
 class VCategoria_evento extends VistaBase {
-    public function render($categorias = [], $categoriaEditar = null) {
+    public function render(...$params) {
+        $categoriaEditar = $params[1] ?? null;
         $this->pageTitle = isset($categoriaEditar) ? 'Editar Categoría de Evento' : 'Registrar Categoría de Evento';
-        parent::render($categorias, $categoriaEditar);
+        parent::render(...$params);
     }
 
-    protected function contenido($categorias = [], $categoriaEditar = null) {
+    protected function contenido(...$params) {
+        $categorias = $params[0] ?? [];
+        $categoriaEditar = $params[1] ?? null;
         $isEditing = isset($categoriaEditar);
         ?>
         <div class="container mt-4">

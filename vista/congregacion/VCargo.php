@@ -2,12 +2,15 @@
 require_once __DIR__ . '/../VistaBase.php';
 
 class VCargo extends VistaBase {
-    public function render($cargos = [], $cargoEditar = null) {
+    public function render(...$params) {
+        $cargoEditar = $params[1] ?? null;
         $this->pageTitle = isset($cargoEditar) ? 'Editar Cargo' : 'Registrar Cargo';
-        parent::render($cargos, $cargoEditar);
+        parent::render(...$params);
     }
 
-    protected function contenido($cargos = [], $cargoEditar = null) {
+    protected function contenido(...$params) {
+        $cargos = $params[0] ?? [];
+        $cargoEditar = $params[1] ?? null;
         $isEditing = isset($cargoEditar);
         ?>
         <div class="container mt-4">

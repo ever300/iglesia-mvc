@@ -2,12 +2,13 @@
 require_once __DIR__ . '/../VistaBase.php';
 
 class VLogin extends VistaBase {
-    public function render($error = '') {
+    public function render(...$params) {
         $this->pageTitle = 'Iniciar Sesión';
-        parent::render($error);
+        parent::render(...$params);
     }
 
-    protected function contenido($error = '') {
+    protected function contenido(...$params) {
+        $error = $params[0] ?? '';
         ?>
         <div class="container mt-4">
             <div class="row justify-content-center">

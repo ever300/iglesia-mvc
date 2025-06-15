@@ -2,28 +2,20 @@
 require_once __DIR__ . '/../VistaBase.php';
 
 class VEvento extends VistaBase {
-    public function render(
-        $eventos,
-        $categorias,
-        $form_evento = [],
-        $eventoEditar = null,
-        $miembros = [],
-        $cargos = [],
-        $asistentes_evento = []
-    ) {
+    public function render(...$params) {
+        $eventoEditar = $params[3] ?? null;
         $this->pageTitle = isset($eventoEditar) ? 'Editar Evento' : 'Registrar Evento';
-        parent::render($eventos, $categorias, $form_evento, $eventoEditar, $miembros, $cargos, $asistentes_evento);
+        parent::render(...$params);
     }
 
-    protected function contenido(
-        $eventos,
-        $categorias,
-        $form_evento = [],
-        $eventoEditar = null,
-        $miembros = [],
-        $cargos = [],
-        $asistentes_evento = []
-    ) {
+    protected function contenido(...$params) {
+        $eventos = $params[0] ?? [];
+        $categorias = $params[1] ?? [];
+        $form_evento = $params[2] ?? [];
+        $eventoEditar = $params[3] ?? null;
+        $miembros = $params[4] ?? [];
+        $cargos = $params[5] ?? [];
+        $asistentes_evento = $params[6] ?? [];
         $isEditing = isset($eventoEditar);
         ?>
         <div class="container mt-4">
