@@ -24,7 +24,9 @@ class CEvento implements IController {
     }
 
     public function handleRequest() {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         $action = $_GET['action'] ?? 'listarEvento';
         switch ($action) {
             case 'crearEvento':
