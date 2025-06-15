@@ -2,9 +2,10 @@
 require_once __DIR__ . '/../VistaBase.php';
 
 class VContribucion extends VistaBase {
-    public function render($contribuciones, $miembros, $eventos, $contribucionEditar = null) {
+    public function render(...$params) {
+        $contribucionEditar = $params[3] ?? null;
         $this->pageTitle = isset($contribucionEditar) ? 'Editar Contribución' : 'Registrar Contribución';
-        parent::render($contribuciones, $miembros, $eventos, $contribucionEditar);
+        parent::render(...$params);
     }
 
     protected function contenido($contribuciones, $miembros, $eventos, $contribucionEditar = null) {

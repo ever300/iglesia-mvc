@@ -2,9 +2,10 @@
 require_once __DIR__ . '/../VistaBase.php';
 
 class VMinisterio extends VistaBase {
-    public function render($ministerios = [], $ministerioEditar = null) {
+    public function render(...$params) {
+        $ministerioEditar = $params[1] ?? null;
         $this->pageTitle = isset($ministerioEditar) ? 'Editar Ministerio' : 'Registrar Ministerio';
-        parent::render($ministerios, $ministerioEditar);
+        parent::render(...$params);
     }
 
     protected function contenido($ministerios = [], $ministerioEditar = null) {
