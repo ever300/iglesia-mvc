@@ -20,9 +20,6 @@ class VAsignacion_Ministerio extends VistaBase {
             <!-- Formulario CRUD -->
             <div class="form-container">
                 <form action="index.php?controller=asignacion_ministerio&action=<?= $isEditing ? 'editarAsignacion' : 'crearAsignacion' ?>" method="POST">
-                    <?php if ($isEditing): ?>
-                        <input type="hidden" name="id" value="<?= htmlspecialchars($asignacionEditar['id']) ?>">
-                    <?php endif; ?>
                     <div class="mb-3">
                         <label class="form-label">Miembro</label>
                         <select class="form-select" name="miembro_id" required>
@@ -59,10 +56,11 @@ class VAsignacion_Ministerio extends VistaBase {
                 <table class="table table-striped align-middle">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Miembro</th>
                             <th>Ministerio</th>
-                            <th>Fecha Asignación</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Final</th>
+                            <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -70,19 +68,20 @@ class VAsignacion_Ministerio extends VistaBase {
                         <?php if (!empty($asignaciones)): ?>
                             <?php foreach ($asignaciones as $asignacion): ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($asignacion['id']) ?></td>
                                     <td><?= htmlspecialchars($asignacion['miembro_nombre']) ?></td>
                                     <td><?= htmlspecialchars($asignacion['ministerio_nombre']) ?></td>
-                                    <td><?= htmlspecialchars($asignacion['fecha_asignacion']) ?></td>
+                                    <td><?= htmlspecialchars($asignacion['fecha_inicio']) ?></td>
+                                    <td><?= htmlspecialchars($asignacion['fecha_final']) ?></td>
+                                    <td><?= $asignacion['estado'] ? 'Activo' : 'Inactivo' ?></td>
                                     <td>
-                                        <a href="index.php?controller=asignacion_ministerio&action=editarAsignacion&id=<?= $asignacion['id'] ?>" class="btn btn-warning btn-sm">Editar</a>
-                                        <a href="index.php?controller=asignacion_ministerio&action=eliminarAsignacion&id=<?= $asignacion['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar esta asignación?')">Eliminar</a>
+                                        <a href="index.php?controller=asignacion_ministerio&action=editarAsignacion&miembro_id=<?= $asignacion['miembro_id'] ?>&ministerio_id=<?= $asignacion['ministerio_id'] ?>" class="btn btn-warning btn-sm">Editar</a>
+                                        <a href="index.php?controller=asignacion_ministerio&action=eliminarAsignacion&miembro_id=<?= $asignacion['miembro_id'] ?>&ministerio_id=<?= $asignacion['ministerio_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar esta asignación?')">Eliminar</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="5" class="text-center">No hay asignaciones registradas.</td>
+                                <td colspan="6" class="text-center">No hay asignaciones registradas.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
