@@ -1,13 +1,17 @@
 <?php
-class VMiembro {
+require_once __DIR__ . '/../VistaBase.php';
+
+class VMiembro extends VistaBase {
     public function render($miembros = [], $cargos = [], $miembroEditar = null) {
+        $this->pageTitle = isset($miembroEditar) ? 'Editar Miembro' : 'Registrar Miembro';
+        parent::render($miembros, $cargos, $miembroEditar);
+    }
+
+    protected function contenido($miembros = [], $cargos = [], $miembroEditar = null) {
         $isEditing = isset($miembroEditar);
-        $pageTitle = $isEditing ? 'Editar Miembro' : 'Registrar Miembro';
-        require_once __DIR__ . '/../componentes/header.php';
-        require_once __DIR__ . '/../componentes/navbar.php';
         ?>
         <div class="container mt-4">
-            <h1><?= $pageTitle ?></h1>
+            <h1><?= $this->pageTitle ?></h1>
             <!-- Formulario CRUD -->
             <div class="form-container">
                 <form action="index.php?controller=miembro&action=<?= $isEditing ? 'editarMiembro&id=' . htmlspecialchars($miembroEditar['id']) : 'crearMiembro' ?>" method="POST">
@@ -16,31 +20,26 @@ class VMiembro {
                     <?php endif; ?>
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" name="nombre"
-                            value="<?= $isEditing ? htmlspecialchars($miembroEditar['nombre']) : '' ?>" required>
+                        <input type="text" class="form-control" name="nombre" value="<?= $isEditing ? htmlspecialchars($miembroEditar['nombre']) : '' ?>" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Apellido</label>
-                        <input type="text" class="form-control" name="apellido"
-                            value="<?= $isEditing ? htmlspecialchars($miembroEditar['apellido']) : '' ?>" required>
+                        <input type="text" class="form-control" name="apellido" value="<?= $isEditing ? htmlspecialchars($miembroEditar['apellido']) : '' ?>" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Fecha de Nacimiento</label>
-                        <input type="date" class="form-control" name="fecha_nacimiento"
-                            value="<?= $isEditing ? htmlspecialchars($miembroEditar['fecha_nacimiento']) : '' ?>">
+                        <input type="date" class="form-control" name="fecha_nacimiento" value="<?= $isEditing ? htmlspecialchars($miembroEditar['fecha_nacimiento']) : '' ?>">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Teléfono</label>
-                        <input type="text" class="form-control" name="telefono"
-                            value="<?= $isEditing ? htmlspecialchars($miembroEditar['telefono']) : '' ?>">
+                        <input type="text" class="form-control" name="telefono" value="<?= $isEditing ? htmlspecialchars($miembroEditar['telefono']) : '' ?>">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Cargo</label>
                         <select class="form-select" name="cargo_id" required>
                             <option value="">Seleccione un cargo</option>
                             <?php foreach ($cargos as $cargo): ?>
-                                <option value="<?= htmlspecialchars($cargo['id']) ?>"
-                                    <?= $isEditing && $cargo['id'] == $miembroEditar['cargo_id'] ? 'selected' : '' ?>>
+                                <option value="<?= htmlspecialchars($cargo['id']) ?>" <?= $isEditing && $cargo['id'] == $miembroEditar['cargo_id'] ? 'selected' : '' ?>>
                                     <?= htmlspecialchars($cargo['nombre']) ?>
                                 </option>
                             <?php endforeach; ?>
@@ -97,6 +96,6 @@ class VMiembro {
             </div>
         </div>
         <?php
-        require_once __DIR__ . '/../componentes/footer.php';
     }
 }
+?>
