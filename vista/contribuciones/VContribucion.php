@@ -47,6 +47,15 @@ class VContribucion extends VistaBase {
                         </select>
                     </div>
                     <div class="mb-3">
+                        <label class="form-label">Tipo</label>
+                        <select name="tipo" class="form-select" required>
+                            <option value="">Seleccione un tipo</option>
+                            <option value="Diezmo" <?= $isEditing && $contribucionEditar['tipo'] === 'Diezmo' ? 'selected' : '' ?>>Diezmo</option>
+                            <option value="Ofrenda" <?= $isEditing && $contribucionEditar['tipo'] === 'Ofrenda' ? 'selected' : '' ?>>Ofrenda</option>
+                            <option value="Donacion" <?= $isEditing && $contribucionEditar['tipo'] === 'Donacion' ? 'selected' : '' ?>>Donaci&oacute;n</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label class="form-label">Monto</label>
                         <input type="number" step="0.01" name="monto" class="form-control" value="<?= $isEditing ? htmlspecialchars($contribucionEditar['monto']) : '' ?>" required>
                     </div>
