@@ -8,7 +8,9 @@ class VCategoria_evento extends VistaBase {
         parent::render(...$params);
     }
 
-    protected function contenido($categorias = [], $categoriaEditar = null) {
+    protected function contenido(...$params) {
+        $categorias = $params[0] ?? [];
+        $categoriaEditar = $params[1] ?? null;
         $isEditing = isset($categoriaEditar);
         ?>
         <div class="container mt-4">

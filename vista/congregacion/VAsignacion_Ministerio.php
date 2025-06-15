@@ -8,7 +8,11 @@ class VAsignacion_Ministerio extends VistaBase {
         parent::render(...$params);
     }
 
-    protected function contenido($asignaciones, $miembros, $ministerios, $asignacionEditar = null) {
+    protected function contenido(...$params) {
+        $asignaciones = $params[0] ?? [];
+        $miembros = $params[1] ?? [];
+        $ministerios = $params[2] ?? [];
+        $asignacionEditar = $params[3] ?? null;
         $isEditing = isset($asignacionEditar);
         ?>
         <div class="container mt-4">

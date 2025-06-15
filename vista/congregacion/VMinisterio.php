@@ -8,7 +8,9 @@ class VMinisterio extends VistaBase {
         parent::render(...$params);
     }
 
-    protected function contenido($ministerios = [], $ministerioEditar = null) {
+    protected function contenido(...$params) {
+        $ministerios = $params[0] ?? [];
+        $ministerioEditar = $params[1] ?? null;
         $isEditing = isset($ministerioEditar);
         ?>
         <div class="container mt-4">

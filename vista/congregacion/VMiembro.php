@@ -8,7 +8,10 @@ class VMiembro extends VistaBase {
         parent::render(...$params);
     }
 
-    protected function contenido($miembros = [], $cargos = [], $miembroEditar = null) {
+    protected function contenido(...$params) {
+        $miembros = $params[0] ?? [];
+        $cargos = $params[1] ?? [];
+        $miembroEditar = $params[2] ?? null;
         $isEditing = isset($miembroEditar);
         ?>
         <div class="container mt-4">

@@ -7,7 +7,8 @@ class VLogin extends VistaBase {
         parent::render(...$params);
     }
 
-    protected function contenido($error = '') {
+    protected function contenido(...$params) {
+        $error = $params[0] ?? '';
         ?>
         <div class="container mt-4">
             <div class="row justify-content-center">
