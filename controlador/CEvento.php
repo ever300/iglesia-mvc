@@ -4,6 +4,8 @@ require_once __DIR__ . '/../modelo/MCategoria_evento.php';
 require_once __DIR__ . '/../modelo/MMiembro.php';
 require_once __DIR__ . '/../modelo/MCargo.php';
 require_once __DIR__ . '/../modelo/MAsistencia_Evento.php';
+require_once __DIR__ . '/../observador/LoggerObserver.php';
+require_once __DIR__ . '/../observador/EmailObserver.php';
 require_once __DIR__ . '/../vista/eventos/VEvento.php';
 require_once __DIR__ . '/IController.php';
 
@@ -17,6 +19,8 @@ class CEvento implements IController {
         $this->modelo = new MEvento();
         $this->modeloCategoria = new MCategoria_evento();
         $this->vista = new VEvento();
+        $this->modelo->attach(new LoggerObserver());
+        $this->modelo->attach(new EmailObserver());
     }
 
     public function handleRequest() {

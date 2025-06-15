@@ -1,13 +1,36 @@
 <?php
 require_once __DIR__ . '/../config/conexion.php';
+require_once __DIR__ . '/../observador/EventoObserver.php';
 
 class MEvento
 {
     private $pdo;
+    private $observers = [];
 
     public function __construct()
     {
         $this->pdo = Conexion::conectar();
+    }
+
+    public function attach(EventoObserver $observer)
+    {
+        $this->observers[] = $observer;
+    }
+
+    public function detach(EventoObserver $observer)
+    {
+        foreach ($this->observers as $index => $obs) {
+            if ($obs === $observer) {
+                unset($this->observers[$index]);
+            }
+        }
+    }
+
+    private function notify(int $eventoId, array $data)
+    {
+        foreach ($this->observers as $observer) {
+            $observer->update($eventoId, $data);
+        }
     }
 
     // CREATE
@@ -22,7 +45,18 @@ class MEvento
             ':fecha_final' => ($fecha_final === '' ? null : $fecha_final),
             ':lugar' => $lugar
         ]);
-        return $this->pdo->lastInsertId();
+        $id = $this->pdo->lastInsertId();
+        $this->notify($id, [
+            'accion' => 'crear',
+            'datos' => [
+                'categoria_id' => $categoria_id,
+                'nombre' => $nombre,
+                'fecha_inicio' => $fecha_inicio,
+                'fecha_final' => ($fecha_final === '' ? null : $fecha_final),
+                'lugar' => $lugar
+            ]
+        ]);
+        return $id;
     }
 
     // READ (Todos)
@@ -47,7 +81,7 @@ class MEvento
     {
         $sql = "UPDATE evento SET categoria_id = :categoria_id, nombre = :nombre, fecha_inicio = :fecha_inicio, fecha_final = :fecha_final, lugar = :lugar WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([
+        $resultado = $stmt->execute([
             ':id' => $id,
             ':categoria_id' => $categoria_id,
             ':nombre' => $nombre,
@@ -55,12 +89,29 @@ class MEvento
             ':fecha_final' => ($fecha_final === '' ? null : $fecha_final),
             ':lugar' => $lugar
         ]);
+        if ($resultado) {
+            $this->notify($id, [
+                'accion' => 'actualizar',
+                'datos' => [
+                    'categoria_id' => $categoria_id,
+                    'nombre' => $nombre,
+                    'fecha_inicio' => $fecha_inicio,
+                    'fecha_final' => ($fecha_final === '' ? null : $fecha_final),
+                    'lugar' => $lugar
+                ]
+            ]);
+        }
+        return $resultado;
     }
 
     // DELETE
     public function eliminarEvento($id)
     {
         $stmt = $this->pdo->prepare("DELETE FROM evento WHERE id = :id");
-        return $stmt->execute([':id' => $id]);
+        $resultado = $stmt->execute([':id' => $id]);
+        if ($resultado) {
+            $this->notify($id, ['accion' => 'eliminar']);
+        }
+        return $resultado;
     }
 }
