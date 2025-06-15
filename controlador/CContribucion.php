@@ -46,7 +46,7 @@ class CContribucion implements IController {
             $this->modelo->crearContribucion(
                 $_POST['evento_id'] ?? null,
                 $_POST['miembro_id'],
-                $_POST['tipo'],
+                $_POST['tipo'] ?? null,
                 $_POST['monto'],
                 $_POST['fecha_registro'] ?? null
             );
@@ -66,7 +66,7 @@ class CContribucion implements IController {
                 $_POST['id'],
                 $_POST['evento_id'] ?? null,
                 $_POST['miembro_id'],
-                $_POST['tipo'],
+                $_POST['tipo'] ?? null,
                 $_POST['monto'],
                 $_POST['fecha_registro'] ?? null
             );
