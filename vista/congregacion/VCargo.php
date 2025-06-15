@@ -8,7 +8,9 @@ class VCargo extends VistaBase {
         parent::render(...$params);
     }
 
-    protected function contenido($cargos = [], $cargoEditar = null) {
+    protected function contenido(...$params) {
+        $cargos = $params[0] ?? [];
+        $cargoEditar = $params[1] ?? null;
         $isEditing = isset($cargoEditar);
         ?>
         <div class="container mt-4">
