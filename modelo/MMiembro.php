@@ -26,9 +26,10 @@ class MMiembro
 
     public function listarMiembro()
     {
-        $sql = "SELECT m.*, c.nombre as cargo_nombre 
-                FROM miembro m 
-                LEFT JOIN cargo c ON m.cargo_id = c.id 
+        $sql = "SELECT m.*, c.nombre as cargo_nombre, 
+                       CONCAT(m.nombre, ' ', m.apellido) AS nombre_completo
+                FROM miembro m
+                LEFT JOIN cargo c ON m.cargo_id = c.id
                 ORDER BY m.id ASC";
         $stmt = $this->pdo->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -37,9 +38,10 @@ class MMiembro
 
     public function obtenerMiembroPorId($id)
     {
-        $sql = "SELECT m.*, c.nombre as cargo_nombre 
-                FROM miembro m 
-                LEFT JOIN cargo c ON m.cargo_id = c.id 
+        $sql = "SELECT m.*, c.nombre as cargo_nombre,
+                       CONCAT(m.nombre, ' ', m.apellido) AS nombre_completo
+                FROM miembro m
+                LEFT JOIN cargo c ON m.cargo_id = c.id
                 WHERE m.id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':id' => $id]);
