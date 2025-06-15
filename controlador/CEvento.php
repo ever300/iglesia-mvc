@@ -6,6 +6,7 @@ require_once __DIR__ . '/../modelo/MCargo.php';
 require_once __DIR__ . '/../modelo/MAsistencia_Evento.php';
 require_once __DIR__ . '/../observador/LoggerObserver.php';
 require_once __DIR__ . '/../observador/EmailObserver.php';
+require_once __DIR__ . '/../observador/WhatsAppObserver.php';
 require_once __DIR__ . '/../vista/eventos/VEvento.php';
 require_once __DIR__ . '/IController.php';
 
@@ -21,6 +22,7 @@ class CEvento implements IController {
         $this->vista = new VEvento();
         $this->modelo->attach(new LoggerObserver());
         $this->modelo->attach(new EmailObserver());
+        $this->modelo->attach(new WhatsAppObserver());
     }
 
     public function handleRequest() {
@@ -95,12 +97,14 @@ class CEvento implements IController {
             }
             // Si se presiona 'guardar_evento'
             if (isset($_POST['guardar_evento'])) {
+                $miembrosIds = array_column($_SESSION['asistentes_evento'], 'miembro_id');
                 $evento_id = $this->modelo->crearEvento(
                     $_POST['categoria_id'],
                     $_POST['nombre'],
                     $_POST['fecha_inicio'],
                     $_POST['fecha_final'],
-                    $_POST['lugar'] ?? ''
+                    $_POST['lugar'] ?? '',
+                    $miembrosIds
                 );
                 foreach ($_SESSION['asistentes_evento'] as $asistente) {
                     $modeloAsistencia->agregarAsistente(
