@@ -20,9 +20,9 @@ class VContribucion extends VistaBase {
 
             <!-- Formulario CRUD -->
             <div class="form-container">
-                <form action="index.php?controller=contribucion&action=<?= $isEditing ? 'editarContribucion&id=' . htmlspecialchars($contribucionEditar['id']) : 'crearContribucion' ?>" method="POST">
+                <form action="index.php?controller=contribucion&action=<?= $isEditing ? 'editarContribucion&id=' . htmlspecialchars($contribucionEditar['id'] ?? '') : 'crearContribucion' ?>" method="POST">
                     <?php if ($isEditing): ?>
-                        <input type="hidden" name="id" value="<?= htmlspecialchars($contribucionEditar['id']) ?>">
+                        <input type="hidden" name="id" value="<?= htmlspecialchars($contribucionEditar['id'] ?? '') ?>">
                     <?php endif; ?>
                     <div class="mb-3">
                         <label class="form-label">Miembro</label>
@@ -48,7 +48,7 @@ class VContribucion extends VistaBase {
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Monto</label>
-                        <input type="number" step="0.01" name="monto" class="form-control" value="<?= $isEditing ? htmlspecialchars($contribucionEditar['monto']) : '' ?>" required>
+                        <input type="number" step="0.01" name="monto" class="form-control" value="<?= $isEditing ? htmlspecialchars($contribucionEditar['monto'] ?? '') : '' ?>" required>
                     </div>
                     <button type="submit" class="btn btn-primary">
                         <?= $isEditing ? 'Actualizar' : 'Guardar' ?>
@@ -68,8 +68,9 @@ class VContribucion extends VistaBase {
                             <th>ID</th>
                             <th>Miembro</th>
                             <th>Evento</th>
+                            <th>Tipo</th>
                             <th>Monto</th>
-                            <th>Fecha</th>
+                            <th>Fecha Registro</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -77,11 +78,12 @@ class VContribucion extends VistaBase {
                         <?php if (!empty($contribuciones)): ?>
                             <?php foreach ($contribuciones as $contribucion): ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($contribucion['id']) ?></td>
-                                    <td><?= htmlspecialchars($contribucion['miembro_nombre']) ?></td>
-                                    <td><?= htmlspecialchars($contribucion['evento_nombre']) ?></td>
-                                    <td><?= htmlspecialchars($contribucion['monto']) ?></td>
-                                    <td><?= htmlspecialchars($contribucion['fecha']) ?></td>
+                                    <td><?= htmlspecialchars($contribucion['id'] ?? '') ?></td>
+                                    <td><?= htmlspecialchars($contribucion['miembro_nombre'] ?? '') ?></td>
+                                    <td><?= htmlspecialchars($contribucion['evento_nombre'] ?? '') ?></td>
+                                    <td><?= htmlspecialchars($contribucion['tipo'] ?? '') ?></td>
+                                    <td><?= htmlspecialchars($contribucion['monto'] ?? '') ?></td>
+                                    <td><?= htmlspecialchars($contribucion['fecha_registro'] ?? '') ?></td>
                                     <td>
                                         <a href="index.php?controller=contribucion&action=editarContribucion&id=<?= $contribucion['id'] ?>" class="btn btn-warning btn-sm">Editar</a>
                                         <a href="index.php?controller=contribucion&action=eliminarContribucion&id=<?= $contribucion['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar esta contribución?')">Eliminar</a>
@@ -90,7 +92,7 @@ class VContribucion extends VistaBase {
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="6" class="text-center">No hay contribuciones registradas.</td>
+                                <td colspan="7" class="text-center">No hay contribuciones registradas.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
