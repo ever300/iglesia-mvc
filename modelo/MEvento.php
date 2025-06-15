@@ -34,7 +34,7 @@ class MEvento
     }
 
     // CREATE
-    public function crearEvento($categoria_id, $nombre, $fecha_inicio, $fecha_final, $lugar)
+    public function crearEvento($categoria_id, $nombre, $fecha_inicio, $fecha_final, $lugar, array $miembros_ids = [])
     {
         $sql = "INSERT INTO evento (categoria_id, nombre, fecha_inicio, fecha_final, lugar) VALUES (:categoria_id, :nombre, :fecha_inicio, :fecha_final, :lugar)";
         $stmt = $this->pdo->prepare($sql);
@@ -54,7 +54,8 @@ class MEvento
                 'fecha_inicio' => $fecha_inicio,
                 'fecha_final' => ($fecha_final === '' ? null : $fecha_final),
                 'lugar' => $lugar
-            ]
+            ],
+            'miembros_ids' => $miembros_ids
         ]);
         return $id;
     }
