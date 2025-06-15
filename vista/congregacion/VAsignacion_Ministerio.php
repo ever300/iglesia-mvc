@@ -71,7 +71,7 @@ class VAsignacion_Ministerio extends VistaBase {
                                     <td><?= htmlspecialchars($asignacion['miembro_nombre']) ?></td>
                                     <td><?= htmlspecialchars($asignacion['ministerio_nombre']) ?></td>
                                     <td><?= htmlspecialchars($asignacion['fecha_inicio']) ?></td>
-                                    <td><?= htmlspecialchars($asignacion['fecha_final']) ?></td>
+                                    <td><?= htmlspecialchars($asignacion['fecha_final'] ?? '') ?></td>
                                     <td><?= $asignacion['estado'] ? 'Activo' : 'Inactivo' ?></td>
                                     <td>
                                         <a href="index.php?controller=asignacion_ministerio&action=editarAsignacion&miembro_id=<?= $asignacion['miembro_id'] ?>&ministerio_id=<?= $asignacion['ministerio_id'] ?>" class="btn btn-warning btn-sm">Editar</a>

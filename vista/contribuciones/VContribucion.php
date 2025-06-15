@@ -80,7 +80,7 @@ class VContribucion extends VistaBase {
                                 <tr>
                                     <td><?= htmlspecialchars($contribucion['id']) ?></td>
                                     <td><?= htmlspecialchars($contribucion['miembro_nombre']) ?></td>
-                                    <td><?= htmlspecialchars($contribucion['evento_nombre']) ?></td>
+                                    <td><?= htmlspecialchars($contribucion['evento_nombre'] ?? '') ?></td>
                                     <td><?= htmlspecialchars($contribucion['tipo']) ?></td>
                                     <td><?= htmlspecialchars($contribucion['monto']) ?></td>
                                     <td><?= htmlspecialchars($contribucion['fecha_registro']) ?></td>
